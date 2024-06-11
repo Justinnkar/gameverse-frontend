@@ -13,145 +13,77 @@ import GameShow from "./pages/GameShow";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
+import mockGames from "./mockGames";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [games, setGames] = useState([])
+  const [currentUser, setCurrentUser] = useState(null);
+  const [games, setGames] = useState(mockGames);
 
-  const navigate = useNavigate()
-  console.log(currentUser)
-  console.log(games)
-
-  const url = "https://gameverse-h8sm.onrender.com"
-
-
-  // http://localhost:3000
-  // https://gameverse-h8sm.onrender.com
+  const navigate = useNavigate();
+  console.log(currentUser);
+  console.log(games);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("token")
+    const loggedInUser = localStorage.getItem("token");
     if (loggedInUser) {
-      setCurrentUser(loggedInUser)
+      setCurrentUser(loggedInUser);
     }
-    readGames()
-  }, [])
+    // Temporarily comment out the readGames function
+    // readGames();
+  }, []);
 
-  const readGames = () => {
-    fetch(`${url}/games`)
-      .then(response => response.json())
-      .then(payload => {
-        setGames(payload)
-      })
-      .catch((error) => console.log(error))
-  }
+  // const url = ''; // Placeholder for the API URL
+
+  // const readGames = () => {
+  //   fetch(`${url}/games`)
+  //     .then((response) => response.json())
+  //     .then((payload) => {
+  //       setGames(payload);
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   const createGame = (game) => {
-    fetch(`${url}/games`, {
-      body: JSON.stringify(game),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST"
-    })
-      .then((response) => response.json())
-      .then((payload) => readGames())
-      .catch((errors) => console.log("Game create errors:", errors))
-  }
+    // Mock create game logic
+    setGames([...games, game]);
+  };
 
   const updateGame = (game, id) => {
-    fetch(`${url}/games/${id}`, {
-      body: JSON.stringify(game),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "PATCH"
-    })
-      .then((response) => response.json())
-      .then((payload) => updateGame(payload))
-      .catch((errors) => console.log("Game update errors:", errors))
-  }
+    // Mock update game logic
+    setGames(games.map((g) => (g.id === id ? game : g)));
+  };
 
   const destroyGame = (id) => {
-    fetch(`${url}/games/${id}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE"
-    })
-      .then((response) => response.json())
-      .then((payload) => {
-        readGames(payload)
-        navigate("/gameindex")
-      })
-      .catch((error) => console.log("Game delete error:", error))
-  }
-
+    // Mock destroy game logic
+    setGames(games.filter((game) => game.id !== id));
+    navigate("/gameindex");
+  };
 
   const login = (userInfo) => {
-    fetch(`${url}/login`, {
-      body: JSON.stringify(userInfo),
-      headers: {
-        "Content-Type": 'application/json',
-        "Accept": 'application/json'
-      },
-      method: 'POST'
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText)
-        }
-        localStorage.setItem("token", response.headers.get("Authorization"))
-        return response.json()
-      })
-      .then(payload => {
-        setCurrentUser(payload)
-      })
-      .catch(error => console.log("login errors: ", error))
-  }
+    // Mock login logic
+    const mockResponse = { id: 1, name: "Mock User" }; // Mock response
+    setCurrentUser(mockResponse);
+    localStorage.setItem("token", "mockToken"); // Mock token
+  };
 
   const signup = (userInfo) => {
-    fetch(`${url}/signup`, {
-      body: JSON.stringify(userInfo),
-      headers: {
-        "Content-Type": 'application/json',
-        "Accept": 'application/json'
-      },
-      method: 'POST'
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText)
-        }
-        localStorage.setItem("token", response.headers.get("Authorization"))
-        return response.json()
-      })
-      .then(payload => {
-        setCurrentUser(payload)
-      })
-      .catch(error => console.log("login errors: ", error))
-  }
+    // Mock signup logic
+    const mockResponse = { id: 1, name: "Mock User" }; // Mock response
+    setCurrentUser(mockResponse);
+    localStorage.setItem("token", "mockToken"); // Mock token
+  };
 
   const logout = () => {
-    fetch(`${url}/logout`, {
-      headers: {
-        "Content-Type": 'application/json',
-        "Authorization": localStorage.getItem("token") //retrieve the token 
-      },
-      method: 'DELETE'
-    })
-      .then(payload => {
-        localStorage.removeItem("token")  // remove the token
-        setCurrentUser(null)
-      })
-      .catch(error => console.log("log out errors: ", error))
-  }
-
+    // Mock logout logic
+    localStorage.removeItem("token");
+    setCurrentUser(null);
+  };
 
   return (
     <>
       <Header currentUser={currentUser} logout={logout} />
       <Routes>
-        <Route path="/" element={<Home readGames={readGames} games={games} />} />
+        <Route path="/" element={<Home readGames={() => {}} games={games} />} />
         <Route path="*" element={<NotFound />} />
         <Route
           path="/gameedit/:id"
