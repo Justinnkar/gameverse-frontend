@@ -1,14 +1,14 @@
 import React from "react";
-import { Card, CardBody, CardTitle, CardSubtitle, Row, Col, Container } from "reactstrap";
+import { Card, CardBody, CardTitle, CardSubtitle, Container } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import "../styles/GameIndexStyle.css";
 
 const GameProtectedIndex = ({ games, currentUser }) => {
-
-  const myGames = games?.filter(game => currentUser?.id === game.user_id)
+  const myGames = games?.filter((game) => currentUser?.id === game.user_id);
 
   const containerStyle = {
-    backgroundImage: "url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80')",
+    backgroundImage:
+      "url('https://images.unsplash.com/photo-1505506874110-6a7a69069a08?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80')",
     backgroundSize: "cover",
     backgroundPosition: "center",
     minHeight: "100vh",
@@ -21,8 +21,12 @@ const GameProtectedIndex = ({ games, currentUser }) => {
         <div className="cardGrid">
           {myGames?.slice(0, 10).map((game, index) => {
             return (
-              <Card className="cardStyle" color="dark" key={index} >
-                <img className="cardStyle img" alt={`profile of a game named ${game.name}`} src={game.image} />
+              <Card className="cardStyle" color="dark" key={index}>
+                <img
+                  className="cardStyle img"
+                  alt={`profile of a game named ${game.name}`}
+                  src={game.image}
+                />
                 <CardBody>
                   <CardTitle tag="h5">{game.name}</CardTitle>
                   <CardSubtitle className="text" tag="h6">
