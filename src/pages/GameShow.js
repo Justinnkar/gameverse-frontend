@@ -1,6 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardBody, CardTitle, CardSubtitle, Button, Container, NavLink } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  Container,
+} from "reactstrap";
 import "../styles/GameShow.css";
 
 const GameShow = ({ currentUser, games }) => {
@@ -18,7 +25,9 @@ const GameShow = ({ currentUser, games }) => {
               className="card-img-show"
             />
             <CardBody className="card-body-show">
-              <CardTitle className="card-title-show" tag="h3">{currentGame.title}</CardTitle>
+              <CardTitle className="card-title-show" tag="h3">
+                {currentGame.title}
+              </CardTitle>
               <CardSubtitle className="card-subtitle-show" tag="h6">
                 Platform: {currentGame.platform}
                 <br />
@@ -32,12 +41,16 @@ const GameShow = ({ currentUser, games }) => {
                 <br />
               </CardSubtitle>
               {currentUser && (
-              <div className='edit-btn-container-show'>
-                <Button className="edit-btn-show" href={`/gameedit/${currentGame.id}`}>Edit Game</Button>
-              </div>
-              )}{' '}
-              <div
-                className="card-rating-show">{currentGame.rating}</div>
+                <div className="edit-btn-container-show">
+                  <Button
+                    className="edit-btn-show"
+                    href={`/gameedit/${currentGame.id}`}
+                  >
+                    Edit Game
+                  </Button>
+                </div>
+              )}{" "}
+              <div className="card-rating-show">{currentGame.rating}</div>
             </CardBody>
           </Card>
         </Container>
